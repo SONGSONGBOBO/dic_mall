@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.songbo.dicshop.mapper.DsUserMapper" >
+  <resultMap id="BaseResultMap" type="com.songbo.dicshop.entity.DsUser" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ds_user_id" property="dsUserId" jdbcType="INTEGER" />
+
+    <result column="ds_user_name" property="dsUserName" jdbcType="VARCHAR" />
+    <result column="ds_user_tel" property="dsUserTel" jdbcType="VARCHAR" />
+    <result column="ds_user_pwd" property="dsUserPwd" jdbcType="VARCHAR" />
+    <result column="ds_user_status" property="dsUserStatus" jdbcType="INTEGER" />
+    <result column="ds_user_level" property="dsUserLevel" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.songbo.dicshop.mapper.DsOrderInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.songbo.dicshop.entity.DsOrderInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ds_order_info_id" property="dsOrderInfoId" jdbcType="INTEGER" />
+    <result column="ds_order_info_order_id" property="dsOrderInfoOrderId" jdbcType="INTEGER" />
+    <result column="ds_order_info_num" property="dsOrderInfoNum" jdbcType="INTEGER" />
+    <result column="ds_order_info_goods_id" property="dsOrderInfoGoodsId" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>
