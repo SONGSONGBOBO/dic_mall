@@ -1,5 +1,6 @@
 package com.songbo.dicshop.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -9,7 +10,7 @@ import lombok.Data;
 @TableName("ds_order_info")
 public class DsOrderInfo {
 
-    @TableId("ds_order_info_id")
+    @TableId(value = "ds_order_info_id", type = IdType.AUTO)
     private Integer dsOrderInfoId;
 
     @TableField("ds_order_info_order_id")

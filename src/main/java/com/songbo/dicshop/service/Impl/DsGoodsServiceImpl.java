@@ -1,5 +1,6 @@
 package com.songbo.dicshop.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.songbo.dicshop.entity.DsGoods;
 import com.songbo.dicshop.mapper.DsGoodsMapper;
 import com.songbo.dicshop.service.DsGoodsService;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName DsGoodsServiceImpl
@@ -66,5 +68,10 @@ public class DsGoodsServiceImpl implements DsGoodsService {
             return false;
         }
 
+    }
+
+    @Override
+    public List<DsGoods> getGoodsList() {
+        return dsGoodsMapper.selectList(null);
     }
 }

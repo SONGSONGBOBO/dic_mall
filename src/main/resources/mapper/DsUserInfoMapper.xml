@@ -10,4 +10,15 @@
     <result column="ds_user_info_addr" property="dsUserInfoAddr" jdbcType="VARCHAR" />
     <result column="ds_user_info_user_id" property="dsUserInfoUserId" jdbcType="INTEGER" />
   </resultMap>
+    <update id="updateUserInfo">
+      update ds_user_info
+      set ds_user_info.ds_user_info_addr = #{addr}
+      set ds_user_info.ds_user_cate = #{cate}
+      where ds_user_info.ds_user_info_id = #{id}
+    </update>
+    <select id="getUserInfoListByUserId" resultType="com.songbo.dicshop.entity.DsUserInfo">
+      select *
+      from ds_user_info i
+      where i.ds_user_info_user_id = #{userId}
+    </select>
 </mapper>

@@ -26,10 +26,10 @@ class DsGoodsServiceImplTest {
     @Test
     @Transactional
     void updateDoods() {
-        DsGoods dsGoods =
+       /* DsGoods dsGoods =
                 new DsGoods("testupdate", "[\"asdas\", \"asdsad\"]", "[\"asdas\", \"asdsad\"]", 1);
         dsGoods.setDsGoodsId(1);
-        System.out.println(dsGoodsService.updateGoods(dsGoods));
+        System.out.println(dsGoodsService.updateGoods(dsGoods));*/
     }
 
     @Test

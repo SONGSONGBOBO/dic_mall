@@ -17,4 +17,6 @@ public interface DsGoodsService {
 
     boolean deleteGoods(int id);
 
+    List<DsGoods> getGoodsList();
+
 }

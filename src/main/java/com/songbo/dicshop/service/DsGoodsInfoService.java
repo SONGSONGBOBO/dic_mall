@@ -11,4 +11,6 @@ public interface DsGoodsInfoService {
     boolean insertGoodsInfo(DsGoodsInfo dsGoodsInfo);
 
     DsGoodsInfo getInfoByName(String name);
+
+    DsGoodsInfo getInfoById(int id);
 }

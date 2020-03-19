@@ -13,4 +13,30 @@
     <result column="ds_user_status" property="dsUserStatus" jdbcType="INTEGER" />
     <result column="ds_user_level" property="dsUserLevel" jdbcType="INTEGER" />
   </resultMap>
+
+    <select id="getUserByName" resultType="com.songbo.dicshop.entity.DsUser">
+      select u
+      from ds_user u
+      where u.ds_user_name = #{name}
+    </select>
+    <select id="getAmountByUserId" resultType="java.lang.Double">
+      select a.ds_addr_amount
+      from ds_addr a
+      where a.ds_addr_user_id = #{id}
+    </select>
+    <select id="getUserByTel" resultType="com.songbo.dicshop.entity.DsUser">
+       select a.*
+      from ds_user a
+      where a.ds_user_tel = #{tel}
+    </select>
+  <select id="getAddrByUserId" resultType="java.lang.String">
+    select a.ds_addr_addr
+      from ds_addr a
+      where a.ds_addr_user_id = #{userId}
+  </select>
+    <select id="getDsaddrByUesrId" resultType="com.songbo.dicshop.entity.DsAddr">
+       select a.*
+      from ds_addr a
+      where a.ds_addr_user_id = #{userId}
+    </select>
 </mapper>

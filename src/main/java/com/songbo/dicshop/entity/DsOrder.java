@@ -1,5 +1,6 @@
 package com.songbo.dicshop.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -15,13 +16,12 @@ import java.util.List;
 public class DsOrder {
 
     @ApiModelProperty(hidden = true)
-    @TableId("ds_order_id")
+    @TableId(value = "ds_order_id", type = IdType.AUTO)
     private Integer dsOrderId;
 
     @ApiModelProperty(hidden = true)
     @TableField("ds_order_price")
     private String dsOrderPrice;
-
 
     @ApiModelProperty(value = "订单创建时间",name = "dsOrderCreateTime")
     @TableField("ds_order_create_time")
@@ -43,8 +43,8 @@ public class DsOrder {
     @TableField("ds_order_user_info_id")
     private Integer dsOrderUserInfoId;
 
-    @ApiModelProperty(value = "选中购物车的id列表",name = "dsCateList")
+    @ApiModelProperty(value = "选中购物车的id列表",name = "dsCartList")
     @TableField(exist = false)
-    private List<String> dsCateListId;
+    private List<String> dsCartListId;
 
 }

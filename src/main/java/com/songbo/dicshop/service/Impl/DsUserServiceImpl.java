@@ -1,11 +1,20 @@
 package com.songbo.dicshop.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
+import com.songbo.dicshop.entity.DsAddr;
 import com.songbo.dicshop.entity.DsUser;
+import com.songbo.dicshop.entity.DsUserInfo;
+import com.songbo.dicshop.mapper.DsUserInfoMapper;
 import com.songbo.dicshop.mapper.DsUserMapper;
 import com.songbo.dicshop.service.DsUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName DsUserServiceImpl
@@ -17,8 +26,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class DsUserServiceImpl implements DsUserService {
 
-    @Autowired
+    @Resource
     private DsUserMapper dsUserMapper;
+    @Resource
+    private DsUserInfoMapper dsUserInfoMapper;
 
     @Override
     public boolean saveUser(DsUser dsUser) {
@@ -39,6 +50,49 @@ public class DsUserServiceImpl implements DsUserService {
 
     @Override
     public DsUser getUserByTel(String tel) {
-        return null;
+        return dsUserMapper.getUserByTel(tel);
     }
+
+    @Override
+    public DsUser getUserByName(String name) {
+        return dsUserMapper.getUserByName(name);
+    }
+
+    @Override
+    public DsUser getUserById(int id) {
+        return dsUserMapper.selectById(id);
+    }
+
+    @Override
+    public List<DsUserInfo> getUserInfoByUserId(int id) {
+        return dsUserInfoMapper.getUserInfoListByUserId(id);
+    }
+
+    @Override
+    public DsUserInfo getUserInfoByUserInfoId(int userInfoId) {
+        return dsUserInfoMapper.selectById(userInfoId);
+    }
+
+    @Override
+    public void setUserInfo(DsUserInfo dsUserInfo) {
+        dsUserInfoMapper.insert(dsUserInfo);
+    }
+
+    @Override
+    public void deleteUserInfo(int userInfoId) {
+        dsUserInfoMapper.deleteById(userInfoId);
+    }
+
+    @Override
+    public void updateUserInfoByUserInfoId(DsUserInfo dsUserInfo) {
+        //dsUserInfoMapper.updateUserInfo(dsUserInfo.getDsUserInfoAddr(), dsUserInfo.getDsUserInfoCate(), dsUserInfo.getDsUserInfoId());
+        dsUserInfoMapper.updateById(dsUserInfo);
+    }
+
+    @Override
+    public DsAddr getByUserId(int id) {
+        return dsUserMapper.getDsaddrByUesrId(id);
+    }
+
+
 }

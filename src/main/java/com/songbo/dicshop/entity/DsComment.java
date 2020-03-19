@@ -1,5 +1,6 @@
 package com.songbo.dicshop.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -10,7 +11,7 @@ import lombok.Data;
 @TableName("ds_comment")
 public class DsComment {
 
-    @TableId("ds_comment_id")
+    @TableId(value = "ds_comment_id", type = IdType.AUTO)
     private Integer dsCommentId;
 
     @TableField("ds_comment_user_id")

@@ -66,18 +66,17 @@ public class JwtUtil {
             try {
                 Map<String, Object> body = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
                 String username = (String) (body.get("username"));
-                String email = (String) (body.get("email"));
+                //String email = (String) (body.get("email"));
                 Integer exp = (Integer) body.get("exp");
                 Integer iat = (Integer) body.get("iat");
                 System.out.println("body:"+body);
 
-                if (username == null || username.isEmpty() || email == null || email.isEmpty() ) {
+                if (username == null || username.isEmpty()  ) {
                     map.put("code", 500);
                     map.put("msg", "非法token");
                     return map;
                 } else {
                     map.put("username", username);
-                    map.put("email", email);
                     map.put("deadline", exp);
                     map.put("create", iat);
                     map.put("code", 200);

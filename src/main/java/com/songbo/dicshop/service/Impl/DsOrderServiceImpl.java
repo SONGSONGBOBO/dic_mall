@@ -25,12 +25,19 @@ public class DsOrderServiceImpl implements DsOrderService {
     }
 
     @Override
-    public boolean updateOrder(DsOrder dsOrder) {
+    public boolean saveOrder(DsOrder dsOrder) {
         return false;
     }
 
     @Override
-    public boolean saveOrder(DsOrder dsOrder) {
+    public boolean updateOrderCompleted(DsOrder dsOrder) {
         return false;
     }
+
+    @Override
+    public boolean updateOrderClosed(DsOrder dsOrder) {
+        return false;
+    }
+
+
 }

@@ -44,4 +44,9 @@ public class DsGoodsInfoServiceImpl implements DsGoodsInfoService {
     public DsGoodsInfo getInfoByName(String name) {
         return dsGoodsInfoMapper.getDsGoodsInfoByName(name);
     }
+
+    @Override
+    public DsGoodsInfo getInfoById(int id) {
+        return dsGoodsInfoMapper.selectById(id);
+    }
 }
