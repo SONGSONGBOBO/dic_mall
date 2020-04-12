@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songbo.dicshop.mapper.DsAddrMapper">
+
+    <select id="getByUserId" resultType="com.songbo.dicshop.entity.DsAddr">
+        select * from ds_addr
+        where ds_addr_user_id = #{uid}
+    </select>
+    <select id="getByUserTel" resultType="com.songbo.dicshop.entity.DsAddr">
+         select a.*
+        from ds_addr a
+        left join ds_user u
+        on ds_addr_user_id = ds_user_id
+        and ds_user_tel = #{tel}
+    </select>
+</mapper>

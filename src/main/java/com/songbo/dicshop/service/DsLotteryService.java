@@ -14,10 +14,8 @@ import com.songbo.dicshop.entity.DsLottery;
  */
 public interface DsLotteryService extends IService<DsLottery> {
 
-    void setLottery(DsLottery dsLottery);
 
-    void closeLottery(int lotteryId);
+    void closeLottery();
 
-    void addLottery();
 
 }

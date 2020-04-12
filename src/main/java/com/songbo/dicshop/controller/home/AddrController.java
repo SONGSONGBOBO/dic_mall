@@ -64,7 +64,7 @@ public class AddrController {
             if (addr == null) {
                 return ResultUtil.result400("用户未设置addr", null);
             }
-            Double amount = dsUserService.getByUserId(userId).getDsAddrAmount();
+            Double amount = dsUserService.getByUserId(userId).getDsAddrBalance();
             return ResultUtil.result200("success", amount);
         } catch (Exception e) {
             return ResultUtil.result500(e.getMessage(), null);

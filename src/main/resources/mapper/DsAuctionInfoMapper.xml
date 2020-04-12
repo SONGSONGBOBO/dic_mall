@@ -8,11 +8,11 @@
         where i.ds_auction_info_auction_id = #{aid}
     </select>
     <select id="getDsAuctionResultListByAid" resultType="com.songbo.dicshop.bean.auction.DsAuctionResult">
-        select i.ds_auction_info_id,i.ds_auction_info_price,i.ds_auction_info_time,u.ds_user_name
-        from ds_auction_info i
-        left join ds_user u
-        on i.ds_auction_info_auction_id = #{aid}
-        and i.ds_auction_info_user_id = u.ds_user_id
+          select i.ds_auction_info_id,i.ds_auction_info_price,i.ds_auction_info_time,u.ds_user_name
+        from ds_auction_info i, ds_user u
+        where i.ds_auction_info_user_id = u.ds_user_id
+        and i.ds_auction_info_auction_id = #{aid}
+        order by ds_auction_info_time desc
     </select>
     <select id="getMaxPrice" resultType="java.lang.Double">
         select max(i.ds_auction_info_price)
@@ -25,5 +25,13 @@
         where i.ds_auction_info_auction_id=#{auctionId}
         and i.ds_auction_info_price = ( select max(i.ds_auction_info_price)
         from ds_auction_info i where i.ds_auction_info_auction_id=#{auctionId})
+    </select>
+    <select id="getDsAuctionResultListByAidAndUid"
+            resultType="com.songbo.dicshop.bean.auction.DsAuctionResult">
+        select i.ds_auction_info_id,i.ds_auction_info_price,i.ds_auction_info_time,u.ds_user_name
+        from ds_auction_info i, ds_user u
+        where i.ds_auction_info_user_id = u.ds_user_id
+        and i.ds_auction_info_user_id = #{uid}
+        and i.ds_auction_info_auction_id = #{aid}
     </select>
 </mapper>

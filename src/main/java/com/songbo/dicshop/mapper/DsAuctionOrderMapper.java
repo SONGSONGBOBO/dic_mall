@@ -3,6 +3,8 @@ package com.songbo.dicshop.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.songbo.dicshop.entity.DsAuctionOrder;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -14,4 +16,9 @@ import com.songbo.dicshop.entity.DsAuctionOrder;
  */
 public interface DsAuctionOrderMapper extends BaseMapper<DsAuctionOrder> {
 
+    DsAuctionOrder getByUsrIdAndAuctionId(int uid, int aid);
+
+    List<DsAuctionOrder> getListByRefresh();
+
+    List<DsAuctionOrder> getListByUser(int userId);
 }

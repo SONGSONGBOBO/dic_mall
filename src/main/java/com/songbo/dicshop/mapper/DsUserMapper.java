@@ -14,4 +14,7 @@ public interface DsUserMapper extends BaseMapper<DsUser> {
     String getAddrByUserId(int userId);
 
     DsAddr getDsaddrByUesrId(int userId);
+
+    //code
+    DsUser getUserByCode(String code);
 }

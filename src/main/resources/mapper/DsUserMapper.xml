@@ -39,4 +39,9 @@
       from ds_addr a
       where a.ds_addr_user_id = #{userId}
     </select>
+    <select id="getUserByCode" resultType="com.songbo.dicshop.entity.DsUser">
+      select *
+      from ds_user
+      where ds_user_invite = #{code}
+    </select>
 </mapper>

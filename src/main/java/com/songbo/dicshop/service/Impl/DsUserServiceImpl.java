@@ -3,9 +3,12 @@ package com.songbo.dicshop.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.songbo.dicshop.entity.DsAddr;
+import com.songbo.dicshop.entity.DsAuctionInfo;
 import com.songbo.dicshop.entity.DsUser;
 import com.songbo.dicshop.entity.DsUserInfo;
+import com.songbo.dicshop.mapper.DsAuctionInfoMapper;
 import com.songbo.dicshop.mapper.DsUserInfoMapper;
 import com.songbo.dicshop.mapper.DsUserMapper;
 import com.songbo.dicshop.service.DsUserService;
@@ -24,7 +27,7 @@ import java.util.List;
  **/
 @Service
 @Slf4j
-public class DsUserServiceImpl implements DsUserService {
+public class DsUserServiceImpl extends ServiceImpl<DsUserMapper, DsUser> implements DsUserService {
 
     @Resource
     private DsUserMapper dsUserMapper;
@@ -43,10 +46,7 @@ public class DsUserServiceImpl implements DsUserService {
 
     }
 
-    @Override
-    public boolean updateUser(int userId) {
-        return false;
-    }
+
 
     @Override
     public DsUser getUserByTel(String tel) {
@@ -61,6 +61,11 @@ public class DsUserServiceImpl implements DsUserService {
     @Override
     public DsUser getUserById(int id) {
         return dsUserMapper.selectById(id);
+    }
+
+    @Override
+    public DsUser getUserByCode(String code) {
+        return dsUserMapper.getUserByCode(code);
     }
 
     @Override
@@ -92,6 +97,11 @@ public class DsUserServiceImpl implements DsUserService {
     @Override
     public DsAddr getByUserId(int id) {
         return dsUserMapper.getDsaddrByUesrId(id);
+    }
+
+    @Override
+    public void inviteIntegral(String code, int useId) {
+
     }
 
 

@@ -8,6 +8,8 @@ public interface DsOrderService {
 
     DsOrder getOrderById(int id);
 
+    DsOrder getByUserIdAndAuctionId(int uid, int aid);
+
     List<DsOrder> getOdersByUserId(int userId);
 
     /**

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.DataOutput;
 import java.io.Serializable;
 
 /**
@@ -27,18 +28,30 @@ public class DsLotteryInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "ds_lottery_info_id", type = IdType.AUTO)
-    private Integer dsLotteryInfoId;
     @ApiModelProperty(hidden = true)
-    private String dsLotteryInfoTxid;
+    private Integer dsLotteryInfoId;
+    @ApiModelProperty("号码数组")
+    private String dsLotteryInfoNumber;
     @ApiModelProperty(hidden = true)
     private Integer dsLotteryInfoUserId;
     @ApiModelProperty("奖票id")
     private Integer dsLotteryInfoLotteryId;
     @ApiModelProperty(hidden = true)
-    private Integer dsLotteryInfoLotteryLevel;
+    private Double dsLotteryInfoPrice;
     @ApiModelProperty(hidden = true)
-    private Integer dsLotteryInfoLotteryTime;
+    private String dsLotteryInfoLotteryTime;
+    @ApiModelProperty(hidden = true)
+    private Integer dsLotteryInfoStatus;
 
+    public DsLotteryInfo() {
+    }
 
-
+    public DsLotteryInfo(String dsLotteryInfoNumber, Integer dsLotteryInfoUserId, Integer dsLotteryInfoLotteryId, Double dsLotteryInfoPrice, String dsLotteryInfoLotteryTime, Integer dsLotteryInfoStatus) {
+        this.dsLotteryInfoNumber = dsLotteryInfoNumber;
+        this.dsLotteryInfoUserId = dsLotteryInfoUserId;
+        this.dsLotteryInfoLotteryId = dsLotteryInfoLotteryId;
+        this.dsLotteryInfoPrice = dsLotteryInfoPrice;
+        this.dsLotteryInfoLotteryTime = dsLotteryInfoLotteryTime;
+        this.dsLotteryInfoStatus = dsLotteryInfoStatus;
+    }
 }

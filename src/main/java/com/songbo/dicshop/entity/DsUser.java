@@ -35,14 +35,29 @@ public class DsUser {
     @ApiModelProperty(hidden = true)
     private Integer dsUserLevel;
 
+    @TableField("ds_user_invite")
+    @ApiModelProperty(hidden = true)
+    private String dsUserInvite;
+
+    @TableField("ds_user_code")
+    @ApiModelProperty(hidden = true)
+    private String dsUserCode;
+
+    @TableField("ds_user_mail")
+    @ApiModelProperty(hidden = true)
+    private String dsUserMail;
+
 
     public DsUser(){}
 
-    public DsUser(String dsUserName, String dsUserTel, String dsUserPwd, Integer dsUserStatus, Integer dsUserLevel) {
+    public DsUser(String dsUserName, String dsUserTel, String dsUserPwd, Integer dsUserStatus, Integer dsUserLevel, String dsUserInvite, String dsUserCode, String dsUserMail) {
         this.dsUserName = dsUserName;
         this.dsUserTel = dsUserTel;
         this.dsUserPwd = dsUserPwd;
         this.dsUserStatus = dsUserStatus;
         this.dsUserLevel = dsUserLevel;
+        this.dsUserInvite = dsUserInvite;
+        this.dsUserCode = dsUserCode;
+        this.dsUserMail = dsUserMail;
     }
 }

@@ -4,14 +4,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.songbo.dicshop.bean.auction.AuctionResult;
 import com.songbo.dicshop.bean.auction.DsAuctionByUser;
+import com.songbo.dicshop.bean.auction.DsAuctionListForUserResult;
 import com.songbo.dicshop.bean.auction.DsAuctionResult;
 import com.songbo.dicshop.config.SocketManager;
 
-import com.songbo.dicshop.entity.DsAuction;
-import com.songbo.dicshop.entity.DsAuctionInfo;
-import com.songbo.dicshop.entity.DsGoodsInfo;
-import com.songbo.dicshop.entity.DsUser;
+import com.songbo.dicshop.entity.*;
 import com.songbo.dicshop.exception.AddrException;
+import com.songbo.dicshop.mapper.DsAuctionOrderMapper;
 import com.songbo.dicshop.service.*;
 import com.songbo.dicshop.utils.ResultUtil;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +20,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.socket.WebSocketSession;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -48,6 +48,9 @@ public class AuctionController {
     @Autowired
     private DsAuctionService dsAuctionService;
 
+    @Resource
+    private DsAuctionOrderMapper dsAuctionOrderMapper;
+
     @PostMapping("/addAuction")
     @ApiOperation(value = "拍卖竞价,会判断是否过期，拍卖价格小于当前最高价或者预设最低价，会返回当前最高价")
     public ResultUtil addAuction(@RequestParam("auction") @ApiParam("拍卖价格") double auction,
@@ -72,11 +75,7 @@ public class AuctionController {
         if (auction>maxNow + max) {
             return ResultUtil.result400("拍卖加价过高", maxNow);
         }
-        try {
-            //扣除积分
-        } catch (Exception e) {
-            return ResultUtil.result500("扣除积分失败", e.getMessage());
-        }
+
         try {
             dsAuctionInfoService.addAuction(new DsAuctionInfo(userId, auction,now,auctionId));
             return ResultUtil.result200("success", null);
@@ -96,7 +95,7 @@ public class AuctionController {
             return ResultUtil.result400("fail", e.getMessage());
         }
     }
-    @PostMapping("/getAuctionById/{auctionId}")
+    @PostMapping("/getAuctionById")
     @ApiOperation(value = "用户获取拍卖详情")
     public ResultUtil getAuctionById(@RequestParam("auctionId") @ApiParam("拍卖id") int auctionId) {
 
@@ -127,7 +126,6 @@ public class AuctionController {
                 list.add(dsAuctionByUser);
             }
 
-
             return ResultUtil.result200("success", list);
         } catch (Exception e) {
             return ResultUtil.result400("fail", e.getMessage());
@@ -137,18 +135,47 @@ public class AuctionController {
     @GetMapping("/getAuctionByUserId")
     @ApiOperation(value = "用户参与的拍卖列表")
     public ResultUtil getAuctionByUserId(@RequestHeader("userId") @ApiParam("userid") int userId) {
-
+            List<DsAuctionListForUserResult> list = new ArrayList<>();
         try {
             List<DsAuction> dsAuction = dsAuctionService.getListByUserId(userId);
-
+            for (DsAuction dsAuction1 : dsAuction) {
+                int status = -1;
+                int at = dsAuction1.getDsAuctionStatus();
+                if (at == 1) {
+                    status = 0;
+                } else if (at == 2) {
+                    DsAuctionOrder order = dsAuctionOrderMapper.getByUsrIdAndAuctionId(userId, dsAuction1.getDsAuctionId());
+                    if (order != null) {
+                        status = 1;
+                    } else {
+                        status = 2;
+                    }
+                }
+                list.add(new DsAuctionListForUserResult(dsAuction1, dsAuctionInfoService.getMaxNow(dsAuction1.getDsAuctionId()), status));
+            }
             //Double maxNow = dsAuctionInfoService.getMaxNow(dsAuction.getDsAuctionId());
             //DsAuctionByUser dsAuctionByUser = new DsAuctionByUser(dsAuction.getDsAuctionId(),dsAuction.getDsAuctionPrice(),dsAuction.getDsAuctionMinadd(),dsAuction.getDsAuctionMaxadd(),dsAuction.getDsAuctionIntegral(),dsAuction.getDsAuctionStart(),dsAuction.getDsAuctionEnd(),dsAuction.getDsAuctionGoodsId(),maxNow,dsAuction.getDsAuctionStatus());
-            return ResultUtil.result200("success", dsAuction);
+            return ResultUtil.result200("success", list);
         } catch (Exception e) {
             return ResultUtil.result400("fail", e.getMessage());
         }
     }
 
+    @PostMapping("/getAuctionInfos")
+    @ApiOperation(value = "用户通过自己id和拍卖id获取拍卖历史")
+    public ResultUtil getAuctionInfos(@RequestHeader("userId") @ApiParam("userid") int userId,
+                                      @RequestParam("auctionId") @ApiParam("拍卖id") int auctionId) {
+
+        try {
+            List<DsAuctionResult> list = dsAuctionInfoService.getListByAuctionIdAndUserId(auctionId, userId);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("auctionInfos", list);
+            jsonObject.put("integral", dsAuctionService.getOne(auctionId).getDsAuctionIntegral());
+            return ResultUtil.result200("success", jsonObject);
+        } catch (Exception e) {
+            return ResultUtil.result400("fail", e.getMessage());
+        }
+    }
    /* @PostMapping("/addAuction")
     @ApiOperation(value = "拍卖竞价")
     public ResultUtil addAuction(@RequestParam("auction") @ApiParam("拍卖价格") double auction,

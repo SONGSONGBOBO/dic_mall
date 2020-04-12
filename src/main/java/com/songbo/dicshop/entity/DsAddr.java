@@ -34,6 +34,10 @@ public class DsAddr implements Serializable {
     @ApiModelProperty(hidden = true)
     private Double dsAddrAmount;
     @ApiModelProperty(hidden = true)
+    private Double dsAddrBalance;
+    @ApiModelProperty(hidden = true)
+    private Double dsAddrCost;
+    @ApiModelProperty(hidden = true)
     private Integer dsAddrUserId;
 
     public DsAddr() {
@@ -41,6 +45,12 @@ public class DsAddr implements Serializable {
 
     public DsAddr(String dsAddrAddr, Integer dsAddrUserId) {
         this.dsAddrAddr = dsAddrAddr;
+        this.dsAddrUserId = dsAddrUserId;
+    }
+
+    public DsAddr(String dsAddrAddr, Double dsAddrBalance, Integer dsAddrUserId) {
+        this.dsAddrAddr = dsAddrAddr;
+        this.dsAddrBalance = dsAddrBalance;
         this.dsAddrUserId = dsAddrUserId;
     }
 }

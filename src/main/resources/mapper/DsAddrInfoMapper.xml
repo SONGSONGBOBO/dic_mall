@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.songbo.dicshop.mapper.DsAddrInfoMapper">
+
+    <select id="getListByNeedRefresh" resultType="com.songbo.dicshop.entity.DsAddrInfo">
+        select *
+        from ds_addr_info
+        where ds_addr_info_status not in (5, 8)
+    </select>
+</mapper>

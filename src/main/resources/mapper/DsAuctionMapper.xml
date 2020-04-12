@@ -16,9 +16,11 @@
     <select id="getListByUserId" resultType="com.songbo.dicshop.entity.DsAuction">
         select *
         from ds_auction a
-        join ds_auction_info i
-        on a.ds_auction_id = i.ds_auction_info_auction_id
-        and ds_auction_info_user_id = #{id}
+        where a.ds_auction_id in (
+            select i.ds_auction_info_auction_id
+            from ds_auction_info i
+            where ds_auction_info_user_id = #{id}
+            )
     </select>
 
 

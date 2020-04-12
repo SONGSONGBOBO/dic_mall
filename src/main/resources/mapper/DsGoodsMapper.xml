@@ -22,4 +22,17 @@
       from ds_goods g
       where g.ds_goods_name = #{name}
     </select>
+    <select id="getByAuctionInfoId" resultType="com.songbo.dicshop.entity.DsGoods">
+     select g.*
+      from ds_goods g
+      where g.ds_goods_id = (
+          select a.ds_auction_goods_id
+          from ds_auction a
+          where a.ds_auction_id = (
+              select i.ds_auction_info_auction_id
+              from ds_auction_info i
+              where i.ds_auction_info_id = #{id}
+              )
+          )
+    </select>
 </mapper>

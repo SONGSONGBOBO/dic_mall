@@ -74,4 +74,9 @@ public class DsGoodsServiceImpl implements DsGoodsService {
     public List<DsGoods> getGoodsList() {
         return dsGoodsMapper.selectList(null);
     }
+
+    @Override
+    public DsGoods getByAuctionInfoService(int auctionInfoId) {
+        return dsGoodsMapper.getByAuctionInfoId(auctionInfoId);
+    }
 }

@@ -41,8 +41,9 @@ public interface DsAuctionService extends IService<DsAuction> {
     //admin
     List<DsAuction> getList();
     List<DsAuction> getListByStatus(int status);
-    //quartz
+    /*quartz*/
     void publish();
     void close();
+    void refreshOrder();
 
 }

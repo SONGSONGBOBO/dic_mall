@@ -1,5 +1,7 @@
 package com.songbo.dicshop.service.Impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.songbo.dicshop.exception.AddrException;
 import com.songbo.dicshop.service.TransactionService;
 import com.songbo.dicshop.utils.NumberUtil;
 import org.junit.jupiter.api.Test;
@@ -14,11 +16,11 @@ class TransactionServiceImplTest {
     @Test
     void createNewAddr() {
 
-        try {
+        /*try {
             transactionService.createNewAddr(1);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Test
@@ -34,6 +36,34 @@ class TransactionServiceImplTest {
             Double amount = transactionService.getAmount(1);
             String s = NumberUtil.formatDouble(amount);
             System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void rechaege() {
+        try {
+            JSONObject rechaege = transactionService.rechaege(1, 100.0, 1);
+            System.out.println(rechaege);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void getNowHash() {
+        try {
+            System.out.println(transactionService.getNowHash());
+            String nowHash = transactionService.getNowHash();
+            char[] chars = nowHash.toCharArray();
+
+            int seeds = chars[nowHash.length()-1];
+            if (Character.isDigit(chars[nowHash.length()-1])){
+                seeds -= '0';
+            }
+            System.out.println(seeds);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

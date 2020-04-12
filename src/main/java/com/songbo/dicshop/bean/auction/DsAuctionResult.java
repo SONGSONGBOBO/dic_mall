@@ -22,6 +22,7 @@ public class DsAuctionResult implements Serializable {
     private String dsUserName;
     @ApiModelProperty("拍卖价格")
     private Double dsAuctionInfoPrice;
+
     @ApiModelProperty("发起时间")
     private Long dsAuctionInfoTime;
 

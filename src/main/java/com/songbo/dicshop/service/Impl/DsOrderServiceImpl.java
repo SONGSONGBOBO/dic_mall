@@ -14,8 +14,15 @@ import java.util.List;
  **/
 @Service
 public class DsOrderServiceImpl implements DsOrderService {
+
+
     @Override
     public DsOrder getOrderById(int id) {
+        return null;
+    }
+
+    @Override
+    public DsOrder getByUserIdAndAuctionId(int uid, int aid) {
         return null;
     }
 

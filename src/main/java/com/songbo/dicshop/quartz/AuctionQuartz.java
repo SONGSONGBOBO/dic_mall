@@ -23,17 +23,11 @@ public class AuctionQuartz implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        try {
-            dsAuctionService.publish();
-            log.info("定时发布正常 ");
-        } catch (Exception e) {
-         log.error("定时发布失败",e);
-        }
-        try {
-            dsAuctionService.close();
-            log.info("定时结算正常 ");
-        } catch (Exception e) {
-            log.error("定时结算失败",e);
-        }
+        dsAuctionService.publish();
+
+        dsAuctionService.close();
+
+        dsAuctionService.refreshOrder();
+
     }
 }

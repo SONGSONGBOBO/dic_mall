@@ -3,20 +3,30 @@ package com.songbo.dicshop.service.Impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.songbo.dicshop.bean.chainResult.CurrentResult;
+import com.songbo.dicshop.bean.coinpayments.CommonResponse;
+import com.songbo.dicshop.bean.coinpayments.CreateRequest;
 import com.songbo.dicshop.entity.DsAddr;
+import com.songbo.dicshop.entity.DsAddrInfo;
+import com.songbo.dicshop.entity.DsOption;
+import com.songbo.dicshop.entity.DsUser;
 import com.songbo.dicshop.exception.AddrException;
 import com.songbo.dicshop.mapper.DsAddrMapper;
+import com.songbo.dicshop.mapper.DsOptionMapper;
 import com.songbo.dicshop.mapper.DsUserMapper;
-import com.songbo.dicshop.service.DsUserService;
-import com.songbo.dicshop.service.RPCRequestService;
-import com.songbo.dicshop.service.TransactionService;
+import com.songbo.dicshop.service.*;
 import com.songbo.dicshop.utils.CommonUtil;
 import com.songbo.dicshop.utils.RPCRequestUtil;
+import com.songbo.dicshop.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Headers;
+import org.brunocvcunha.coinpayments.model.CreateTransactionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName TransactionServiceImpl
@@ -33,8 +43,22 @@ public class TransactionServiceImpl implements TransactionService {
     private DsAddrMapper dsAddrMapper;
     @Autowired
     private RPCRequestService rpcRequestService;
+    @Resource
+    private DsOptionMapper dsOptionMapper;
+    @Autowired
+    private CoinpaymentsService coinpaymentsService;
+    @Autowired
+    private DsAddrInfoService dsAddrInfoService;
+
+    private static Map<String, String> map = new HashMap<>();
+    private static Headers ukexHeaders = null;
+    static {
+        map.put("Content-Type", "application/x-www-form-urlencoded");
+        ukexHeaders= Headers.of(map);
+    }
+
     @Override
-    public String createNewAddr(int userId) throws AddrException {
+    public String createNewAddr(int userId, double integral) throws AddrException {
         String addrByUserId = dsUserMapper.getAddrByUserId(userId);
         if (addrByUserId != null) {
             return addrByUserId;
@@ -42,7 +66,7 @@ public class TransactionServiceImpl implements TransactionService {
         JSONObject jsonObject = RPCRequestUtil.getMainJsonParam(CommonUtil.CREATE_ADDRESS);
         CurrentResult<String, String> createAddressResult = rpcRequestService.CurrentRPCRequest(jsonObject, String.class, String.class);
         if (createAddressResult != null && createAddressResult.getError()==null){
-            dsAddrMapper.insert(new DsAddr(createAddressResult.getResult(),userId));
+            dsAddrMapper.insert(new DsAddr(createAddressResult.getResult(), integral, userId));
             return createAddressResult.getResult();
         } else {
             log.error("创建地址失败： "+createAddressResult.toString());
@@ -51,12 +75,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public String getAddr(int userId) throws AddrException {
-        try {
+    public String getAddr(int userId)  {
+
             return dsUserMapper.getAddrByUserId(userId);
-        } catch (Exception e){
-            throw new AddrException("当前用户无地址，请联系管理员");
-        }
+
 
     }
 
@@ -88,5 +110,56 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void sendMoney(double send, String from, String to) {
 
+    }
+
+
+    @Override
+    public JSONObject rechaege(int cate, double amount, int userId) throws Exception {
+        String time = String.valueOf(System.currentTimeMillis());
+       /* DsOption option = dsOptionMapper.getOption();
+        Double rate = option.getDsOptionUsdtRate();*/
+        DsUser user = dsUserMapper.selectById(userId);
+        Double rate = null;
+        try {
+            JSONObject ukex = rpcRequestService.currentRequest("https://api.ukex.io/api/index/ticker/dic_usdt", "get", ukexHeaders, null, JSONObject.class);
+            BigDecimal last = (BigDecimal) ukex.get("last");
+            rate = last.doubleValue();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+        double usdt = amount * rate;
+        if (usdt <= 1) {
+            throw new Exception("充值金额过少");
+        }
+        try {
+            CreateTransactionResponse transaction = coinpaymentsService.createTransaction(new CreateRequest(CommonUtil.COINPAYMENTS_CREATE_TRANSACTION,
+                    usdt, "USDT.ERC20", "USDT.ERC20", user.getDsUserMail() == null ? CommonUtil.COINPAYMENTS_MAIL : user.getDsUserMail(),
+                    CommonUtil.COINPAYMENTS_ADDRESS, user.getDsUserName()));
+            JSONObject jsonObject = new JSONObject();
+            dsAddrInfoService.save(new DsAddrInfo( transaction.getTransactionId(), usdt, amount, 0, 1, userId, time, time));
+            jsonObject.put("addr", transaction.getAddress());
+            jsonObject.put("amount", transaction.getAmount());
+            return jsonObject;
+        } catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+
+                   /* CreatePaymentResult createPaymentResult = paymentsService.ceatePayment(
+                            new CreatePaymentRequest(dic,"usd",  dic, "usdterc20", "", String.valueOf(userId),"recharge_usdterc20"+dic)
+                    );*/
+
+    }
+
+    //getbestblockhash
+    @Override
+    public String getNowHash() throws AddrException {
+        JSONObject jsonObject = RPCRequestUtil.getMainJsonParam("getbestblockhash");
+        CurrentResult<String, String> result = rpcRequestService.CurrentRPCRequest(jsonObject, String.class, String.class);
+        if (result != null && result.getError()==null){
+            return result.getResult();
+        } else {
+            throw new AddrException("获取hash失败！");
+        }
     }
 }

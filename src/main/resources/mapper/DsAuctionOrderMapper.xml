@@ -2,4 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.songbo.dicshop.mapper.DsAuctionOrderMapper">
 
+    <select id="getByUsrIdAndAuctionId" resultType="com.songbo.dicshop.entity.DsAuctionOrder">
+        select *
+        from ds_auction_order o
+        where o.ds_auction_order_user_id = #{uid}
+        and o.ds_auction_order_auction_info_id in (
+             select i.ds_auction_info_id
+            from ds_auction_info i
+            where i.ds_auction_info_auction_id = #{aid}
+        )
+    </select>
+    <select id="getListByRefresh" resultType="com.songbo.dicshop.entity.DsAuctionOrder">
+        select *
+        from ds_auction_order o
+        where o.ds_auction_order_status not in (2, 5, 6, 7, 8)
+    </select>
+    <select id="getListByUser" resultType="com.songbo.dicshop.entity.DsAuctionOrder">
+         select *
+        from ds_auction_order o
+        where o.ds_auction_order_user_id = #{userId}
+    </select>
 </mapper>

@@ -19,4 +19,6 @@ public interface DsGoodsService {
 
     List<DsGoods> getGoodsList();
 
+    DsGoods getByAuctionInfoService(int auctionInfoId);
+
 }

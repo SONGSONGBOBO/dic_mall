@@ -29,22 +29,28 @@ public class DsLottery implements Serializable {
     @TableId(value = "ds_lottery_id", type = IdType.AUTO)
     @ApiModelProperty(hidden = true)
     private Integer dsLotteryId;
+    @ApiModelProperty("name")
+    private String dsLotteryName;
     @ApiModelProperty("开始时间戳")
     private String dsLotteryStart;
     @ApiModelProperty("结束时间戳")
     private String dsLotteryEnd;
-    @ApiModelProperty("奖金等级数量，数组，[1,2,3]就是三个奖项，一等1人，以此类推")
-    private String dsLotteryNum;
-    @ApiModelProperty("奖券价格")
-    private Double dsLotteryPrice;
-    @ApiModelProperty("奖金,数组,[21.1,13.2,4]一等奖21.1以此类推")
+    @ApiModelProperty("奖项map")
     private String dsLotteryRewards;
+    @ApiModelProperty("奖券单价")
+    private Double dsLotteryPrice;
 
     /**
-     * 结算奖励形式,1为btc
+     * 结算奖励形式,1为usdt
      */
-    @ApiModelProperty("lottery种类，1为btc，2为usdt，3为eth")
+    @ApiModelProperty("lottery奖品种类，1为usdt，2为btc，3为eth")
     private Integer dsLotteryCate;
+    @ApiModelProperty("奖票数量")
+    private Integer dsLotteryTotal;
+    @ApiModelProperty(hidden = true)
+    private Integer dsLotterySale;
+    @ApiModelProperty("1为已开奖，0为未开奖")
+    private Integer dsLotteryStatus;
 
 
 }

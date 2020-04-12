@@ -37,15 +37,36 @@ public class CommonUtil {
     //https://explorer.indexchain.io/insight-api-komodo/addrs/RGd77ChrgHVNgYU4ptXaofCCBYnkho1xJr/txs?from=0&to=10
     public static String EXPLORER_URL_txs = "/txs?";
 
- public final static String SENDTOADDRESS = "sendtoaddress";
- public final static String CREATE_ADDRESS = "getnewaddress";
- public final static String GET_BALANCE = "getaddressbalance";
- public final static String GET_UTXOS = "getaddressutxos";
+    public final static String SENDTOADDRESS = "sendtoaddress";
+    public final static String CREATE_ADDRESS = "getnewaddress";
+    public final static String GET_BALANCE = "getaddressbalance";
+    public final static String GET_UTXOS = "getaddressutxos";
 
 
 
- //imgs
- public final static String IMGS_URL = "/home/dicmall/imgs";
- //public final static String IMGS_URL = "/home/songbo/Pictures";
+    //imgs
+    public final static String IMGS_URL = "/home/dicmall/imgs";
+    //public final static String IMGS_URL = "/home/songbo/Pictures";
 
+
+    //nowpayments
+    public final static String NOWPAYMENTS_URL = "https://api.nowpayments.io/v1/";
+    public final static String NOWPAYMENTS_HEADER_KEY = "x-api-key";
+    public final static String NOWPAYMENTS_HEADER_VALUE = "VYBM29V-V3TMV7H-KQE0MSK-HYM40PQ";
+
+    //coinpayments
+    public final static String COINPAYMENTS_URL = "https://www.coinpayments.net/api.php";
+    public final static String COINPAYMENTS_CREATE_TRANSACTION = "create_transaction";
+    public final static String COINPAYMENTS_GET_TX_INFO = "get_tx_info";
+    public final static String COINPAYMENTS_ADDRESS = "0xD1C3Fd452e9976DbaFBA4E0365bEE7aBD614a4dC";
+    public final static String COINPAYMENTS_MAIL = "1362718167@qq.com";
+
+    public final static String COINPAYMENTS_HEADER_TYPE_KEY = "Content-Type";
+    public final static String COINPAYMENTS_HEADER_RYPE_VALUE = "application/x-www-form-urlencoded";
+    public final static String COINPAYMENTS_HEADER_HMAC = "HMAC";
+
+    public final static String COINPAYMENTS_PUBLIC_KEY = "bc4146d37bbeb0cd6c29833c951f11444f068bd351da02290409eb580b82e565";
+    //version=1&cmd=rates&key=bc4146d37bbeb0cd6c29833c951f11444f068bd351da02290409eb580b82e565&format=json
+    public final static String COINPAYMENTS_PUBLIC_DATA = "version=1&key=bc4146d37bbeb0cd6c29833c951f11444f068bd351da02290409eb580b82e565&format=json";
+    public final static String COINPAYMENTS_PRIVATE_KEY = "6f106fbc15c9c09811c5d14d7FdAC71313a7B1B514e3428F03aF12398C3544d5";
 }

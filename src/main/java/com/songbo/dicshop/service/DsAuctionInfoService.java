@@ -23,7 +23,7 @@ public interface DsAuctionInfoService extends IService<DsAuctionInfo> {
      *@param
      *@return
      **/
-    void addAuction(DsAuctionInfo dsAuctionInfo);
+    void addAuction(DsAuctionInfo dsAuctionInfo) throws Exception;
 
     List<DsAuctionResult> getListByAuctionId(int id);
 
@@ -33,4 +33,8 @@ public interface DsAuctionInfoService extends IService<DsAuctionInfo> {
       *@return
     **/
     Double getMaxNow(int auctionInfoId);
+
+    List<DsAuctionResult> getListByAuctionIdAndUserId(int aid, int uid);
+
+
 }

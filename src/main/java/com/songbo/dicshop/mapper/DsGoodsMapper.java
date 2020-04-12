@@ -8,4 +8,7 @@ public interface DsGoodsMapper extends BaseMapper<DsGoods> {
     DsGoods getGoodsInfoById(int id);
 
     DsGoods getGoodsByName(String name);
+
+    //
+    DsGoods getByAuctionInfoId(int id);
 }

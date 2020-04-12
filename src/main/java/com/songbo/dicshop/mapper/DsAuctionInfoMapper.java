@@ -18,6 +18,8 @@ import java.util.List;
 public interface DsAuctionInfoMapper extends BaseMapper<DsAuctionInfo> {
     DsAuctionInfo getListByAid(int aid);
     List<DsAuctionResult> getDsAuctionResultListByAid(int aid);
+
+    List<DsAuctionResult> getDsAuctionResultListByAidAndUid(int aid, int uid);
     Double getMaxPrice(int aid);
 
     //最高
